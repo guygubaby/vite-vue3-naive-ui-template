@@ -1,16 +1,13 @@
-import { defineConfig, presetAttributify, presetIcons, presetUno } from 'unocss'
-
-const rawIconCollection: Record<string, string> = {
-  home: ``,
-}
-
-export const MyIconCollection = Object.entries(rawIconCollection).reduce((acc, [key, value]) => {
-  acc[key] = value
-    .replace(/fill="(\w*)"/g, (match, p1) => match.replace(p1, 'currentColor'))
-  return acc
-}, {} as Record<string, string>)
+import { defineConfig, presetIcons, presetUno } from 'unocss'
 
 export default defineConfig({
+  content: {
+    pipeline: {
+      include: [
+        'src/**/*.{js,ts,vue}',
+      ],
+    },
+  },
   theme: {
     colors: {
       primary: '#374EFC',
@@ -23,14 +20,12 @@ export default defineConfig({
   ],
   presets: [
     presetUno(),
-    presetAttributify(),
     presetIcons({
       scale: 1.2,
       warn: true,
-      collections: {
-        bryce: {
-          ...MyIconCollection,
-        },
+      extraProperties: {
+        'display': 'inline-block',
+        'vertical-align': 'middle',
       },
     }),
   ],
