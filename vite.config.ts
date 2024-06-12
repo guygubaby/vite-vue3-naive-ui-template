@@ -11,6 +11,9 @@ import { VueRouterAutoImports } from 'unplugin-vue-router'
 import Layouts from 'vite-plugin-vue-layouts'
 
 export default defineConfig({
+  server: {
+    port: 3333,
+  },
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
@@ -26,7 +29,7 @@ export default defineConfig({
     AutoImport({
       imports: [
         'vue',
-        // '@vueuse/core',
+        '@vueuse/core',
         'pinia',
         VueRouterAutoImports,
         {
