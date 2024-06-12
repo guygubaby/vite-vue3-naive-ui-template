@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router/auto'
+import { routes } from 'vue-router/auto-routes'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { createPinia } from 'pinia'
 import { persistPlugin } from 'pinia-misc'
@@ -18,17 +19,14 @@ app.use(pinia)
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  extendRoutes: routes => setupLayouts(routes),
+  routes: setupLayouts(routes),
 })
-
-// 是否已经登录
-const hasLoggedIn = useLocalStorage<boolean>('hasLoggedIn', false)
 
 const publicRoutes = ['/login', '/register']
 
 router.beforeEach((to, from, next) => {
   const isPublic = publicRoutes.includes(to.path)
-  if (hasLoggedIn.value || isPublic)
+  if (isPublic)
     return next()
 
   return next('/login')
